@@ -7,7 +7,7 @@
             </div>
 
             {{-- Restore Button --}}
-            <form action="{{ route('admin.games.restore', $game->id) }}" method="POST">
+            <form action="{{ route('admin.games.restore', $game) }}" method="POST">
                 @csrf
                 @method('PATCH')
                 <button class="btn btn-success">Annulla</button>
