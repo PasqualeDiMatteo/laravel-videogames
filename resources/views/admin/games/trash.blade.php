@@ -26,7 +26,7 @@
                             </form>
 
                             {{-- Restore Button --}}
-                            <form action="{{ route('admin.games.restore', $project) }}" method="POST">
+                            <form action="{{ route('admin.games.restore', $game) }}" method="POST">
                                 @csrf
                                 @method('PATCH')
                                 <button class="btn btn-success">Ripristina</button>
