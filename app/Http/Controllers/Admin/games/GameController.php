@@ -86,11 +86,19 @@ class GameController extends Controller
         return view('admin.games.trash', compact('games'));
     }
 
-    // Drop game
+    // Drop Game
     public function drop(string $id)
     {
         $game = Game::onlyTrashed()->findOrFail($id);
         $game->forceDelete();
         return to_route('admin.games.trash')->with("type", "success")->with("message", "Gioco cancellato definitivamente");
+    }
+
+    // Restore Game
+    public function restore(string $id)
+    {
+        $game = Game::onlyTrashed()->findOrFail($id);
+        $game->restore();
+        return to_route('admin.games.trash');
     }
 }
