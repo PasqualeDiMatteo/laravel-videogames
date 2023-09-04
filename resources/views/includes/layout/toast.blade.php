@@ -5,12 +5,14 @@
             <div class="toast-body">
                 {{ session('toast-message') }}
             </div>
+
             {{-- Restore Button --}}
-            <form action="{{ route('admin.games.restore', $game) }}" method="POST">
+            <form action="{{ route('admin.games.restore', $game->id) }}" method="POST">
                 @csrf
                 @method('PATCH')
                 <button class="btn btn-success">Annulla</button>
             </form>
+
             <button type="button" class="btn-close btn-close-white me-2 m-auto" onclick="closeBtn()"></button>
         </div>
     </div>

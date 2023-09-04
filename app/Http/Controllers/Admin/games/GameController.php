@@ -103,6 +103,8 @@ class GameController extends Controller
     {
         $game = Game::onlyTrashed()->findOrFail($id);
         $game->restore();
-        return to_route('admin.games.trash');
+        return to_route('admin.games.index')
+            ->with('toast-class', 'success')
+            ->with('toast-message', 'Gioco eliminato');
     }
 }
