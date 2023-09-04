@@ -11,9 +11,9 @@
 
             @forelse ($games as $game)
                 <div class="card col-6 m-3" style="width: 18rem;">
-                    <img src="{{ $game->thumb }}" class="card-img-top" alt="Image">
+                    <img src="{{ $game->img }}" class="card-img-top" alt="Image">
                     <div class="card-body">
-                        <h5 class="card-title">{{ $game->name }}</h5>
+                        <h5 class="card-title">{{ $game->title }}</h5>
 
                         {{-- Buttons --}}
                         <div class="d-flex justify-content-evenly">
@@ -44,7 +44,7 @@
             <div class="d-flex justify-content-center">
 
                 {{-- All games Button --}}
-                <a href="{{ route('admin.games.index') }}" class="btn btn-primary">Ritorna ai progetti</a>
+                <a href="{{ route('admin.games.index') }}" class="btn btn-primary">Tutti i giochi</a>
 
             </div>
         </div>
