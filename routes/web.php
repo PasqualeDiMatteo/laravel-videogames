@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\Games\GameController;
 use App\Http\Controllers\Admin\HomeController as AdminHomeController;
 use App\Http\Controllers\Guest\HomeController as GuestHomeController;
 use App\Http\Controllers\ProfileController;
@@ -18,7 +19,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [GuestHomeController::class, "index"])->name("guest.home");
 
-Route::get('/admin', [AdminHomeController::class, "index"])->middleware(['auth', 'verified'])->name('admin.index');
+
+
+Route::middleware('auth')->name("admin.")->prefix("/admin")->group(function () {
+    Route::get('/', [AdminHomeController::class, "index"])->name('index');
+    Route::resource("/games", GameController::class);
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
