@@ -31,7 +31,7 @@
                             <div class="d-flex gap-2 justify-content-end">
                                 <a href="{{ route('admin.games.show', $game) }}" class="btn btn-primary">Info</a>
                                 <a href="" class="btn btn-warning">Modifica</a>
-                                <form action="{{ route('admin.games.destroy', $game) }}"method="POST">
+                                <form action="{{ route('admin.games.destroy', $game) }}"method="POST" class="delete-btn">
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn btn-danger">Elimina</button>
@@ -45,4 +45,16 @@
             </tbody>
             <a href="{{ route('admin.games.trash') }}">Cestino</a>
     </div>
+@endsection
+@section('scripts')
+    <script>
+        const deleteForms = document.querySelectorAll('.delete-btn');
+        deleteForms.forEach(form => {
+            form.addEventListener('submit', e => {
+                e.preventDefault();
+                const hasConfirmed = confirm('Sei sicuro di voler eliminate questo elemento?');
+                if (hasConfirmed) form.submit();
+            });
+        });
+    </script>
 @endsection
