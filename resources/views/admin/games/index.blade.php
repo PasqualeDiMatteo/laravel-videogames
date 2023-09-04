@@ -39,10 +39,12 @@
                             </div>
                         </td>
                     </tr>
+                    @include('includes.layout.toast')
                 @empty
                     <h1>Non ci sono giochi</h1>
                 @endforelse
             </tbody>
+            {{-- Toast Here --}}
             <a href="{{ route('admin.games.trash') }}">Cestino</a>
     </div>
 @endsection

@@ -96,7 +96,8 @@ class GameController extends Controller
             ->with("type", "success")
             ->with("message", "Gioco cancellato con successo")
             ->with('toast-class', 'success')
-            ->with('toast-message', 'Gioco eliminato');
+            ->with('toast-message', 'Gioco eliminato')
+            ->with('game', $game->id);
     }
 
     // Trash Game
@@ -120,7 +121,6 @@ class GameController extends Controller
         $game = Game::onlyTrashed()->findOrFail($id);
         $game->restore();
         return to_route('admin.games.index')
-            ->with('toast-class', 'success')
-            ->with('toast-message', 'Gioco eliminato');
+            ->with('toast-class', 'success');
     }
 }
