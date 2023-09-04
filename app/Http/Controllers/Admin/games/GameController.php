@@ -68,6 +68,14 @@ class GameController extends Controller
     public function update(Request $request, Game $game)
     {
         $data = $request->all();
+        $request->validate([
+            'title' => 'required|string',
+            'price' => 'required|string',
+            'date_release' => 'required|string',
+            'image' => 'required|string',
+            'vote' => 'required|string',
+            'description' => 'required|string',
+        ]);
         $game->title = $data['title'];
         $game->price = $data['price'];
         $game->date_release = $data['date_release'];
