@@ -30,6 +30,9 @@ Route::middleware('auth')->name("admin.")->prefix("/admin")->group(function () {
     // Drop games Route 
     Route::delete('/games/{game}/drop', [GameController::class, 'drop'])->name('games.drop');
 
+    // Restore Games Route 
+    Route::patch('/games/{game}/restore', [GameController::class, 'restore'])->name('games.restore');
+
     // All Resources
     Route::resource("/games", GameController::class);
 });
