@@ -43,7 +43,7 @@ class GameController extends Controller
         ]);
         $game->fill($data);
         $game->save();
-        return to_route('admin.games.show', $game);
+        return to_route('admin.games.show', $game)->with("type", "success")->with("message", "Gioco caricato con successo");
     }
 
     /**
@@ -76,7 +76,7 @@ class GameController extends Controller
     public function destroy(Game $game)
     {
         $game->delete();
-        return to_route('admin.games.index');
+        return to_route('admin.games.index')->with("type", "success")->with("message", "Gioco cancellato con successo");
     }
 
     // Trash Game
@@ -91,6 +91,6 @@ class GameController extends Controller
     {
         $game = Game::onlyTrashed()->findOrFail($id);
         $game->forceDelete();
-        return to_route('admin.games.trash');
+        return to_route('admin.games.trash')->with("type", "success")->with("message", "Gioco cancellato definitivamente");
     }
 }

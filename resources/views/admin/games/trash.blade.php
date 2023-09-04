@@ -11,7 +11,7 @@
 
             @forelse ($games as $game)
                 <div class="card col-6 m-3" style="width: 18rem;">
-                    <img src="{{ $game->img }}" class="card-img-top" alt="Image">
+                    <img src="{{ $game->image }}" class="card-img-top" alt="Image">
                     <div class="card-body">
                         <h5 class="card-title">{{ $game->title }}</h5>
 
@@ -38,7 +38,7 @@
                 </div>
 
             @empty
-                <div class="alert alert-success">Non ci sono elementi</div>
+                <h1>Non ci sono elementi nel cestino</h1>
             @endforelse
 
             <div class="d-flex justify-content-center">
