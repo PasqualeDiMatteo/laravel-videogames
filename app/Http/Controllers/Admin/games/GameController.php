@@ -84,7 +84,11 @@ class GameController extends Controller
     public function destroy(Game $game)
     {
         $game->delete();
-        return to_route('admin.games.index')->with("type", "success")->with("message", "Gioco cancellato con successo");
+        return to_route('admin.games.index')
+            ->with("type", "success")
+            ->with("message", "Gioco cancellato con successo")
+            ->with('toast-class', 'success')
+            ->with('toast-message', 'Gioco eliminato');
     }
 
     // Trash Game
@@ -107,6 +111,8 @@ class GameController extends Controller
     {
         $game = Game::onlyTrashed()->findOrFail($id);
         $game->restore();
-        return to_route('admin.games.trash');
+        return to_route('admin.games.index')
+            ->with('toast-class', 'success')
+            ->with('toast-message', 'Gioco eliminato');
     }
 }

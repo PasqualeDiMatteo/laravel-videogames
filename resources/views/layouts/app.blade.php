@@ -107,8 +107,9 @@
             </div>
             @yield('content')
         </main>
-
     </div>
+    {{-- Toast Here --}}
+    @include('includes.layout.toast')
     @yield('scripts')
 </body>
 
