@@ -4,7 +4,7 @@
     <div class="container mt-5">
         <div class="d-flex justify-content-end">
             {{-- Button added --}}
-            <a href="" class="btn btn-success">Aggiungi un gioco</a>
+            <a href="{{ route('admin.games.create') }}" class="btn btn-success">Aggiungi un gioco</a>
         </div>
         {{-- Table --}}
         <table class="table">
