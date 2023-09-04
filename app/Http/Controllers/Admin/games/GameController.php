@@ -82,7 +82,7 @@ class GameController extends Controller
     // Trash Game
     public function trash()
     {
-        $game = Game::onlyTrashed()->get();
+        $games = Game::onlyTrashed()->get();
         return view('admin.games.trash', compact('games'));
     }
 

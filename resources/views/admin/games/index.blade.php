@@ -31,7 +31,9 @@
                             <div class="d-flex gap-2 justify-content-end">
                                 <a href="{{ route('admin.games.show', $game) }}" class="btn btn-primary">Info</a>
                                 <a href="" class="btn btn-warning">Modifica</a>
-                                <form action="">
+                                <form action="{{ route('admin.games.destroy', $game) }}"method="POST">
+                                    @csrf
+                                    @method('DELETE')
                                     <button class="btn btn-danger">Elimina</button>
                                 </form>
                             </div>
@@ -41,5 +43,6 @@
                     <h1>Non ci sono giochi</h1>
                 @endforelse
             </tbody>
+            <a href="{{ route('admin.games.trash') }}">Cestino</a>
     </div>
 @endsection
