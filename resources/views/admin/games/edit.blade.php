@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
     <div class="container">
         <div class="d-flex justify-content-between align-items-center">
@@ -24,8 +23,9 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('admin.games.store') }}" method="POST" novalidate>
+                    <form action="{{ route('admin.games.update', $game) }}" method="POST" novalidate>
                         @csrf
+                        @method('PUT')
                         <div class="row">
                             <div class="col-6">
                                 <div class="mb-3">
@@ -33,7 +33,7 @@
                                     <input type="text"
                                         class="form-control @error('title') is-invalid @elseif(old('title')) is-valid @enderror"
                                         id="title" name="title" placeholder="Inserisci titolo"
-                                        value="{{ old('title') }}" required>
+                                        value="{{ old('title', $game->title) }}" required>
                                     @error('title')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -45,7 +45,7 @@
                                     <input type="text"
                                         class="form-control @error('price') is-invalid @elseif(old('price')) is-valid @enderror"
                                         id="price" name="price" placeholder="Inserisci prezzo"
-                                        value="{{ old('price') }}" required>
+                                        value="{{ old('price', $game->price) }}" required>
                                     @error('price')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -57,7 +57,7 @@
                                     <input type="date"
                                         class="form-control @error('date_release') is-invalid @elseif(old('date_release')) is-valid @enderror"
                                         id="date_release" name="date_release" placeholder="Inserisci data d'uscita"
-                                        value="{{ old('date_release') }}" required>
+                                        value="{{ old('date_release', $game->date_release) }}" required>
                                     @error('date_release')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -69,7 +69,7 @@
                                     <input type="text"
                                         class="form-control @error('vote') is-invalid @elseif(old('vote')) is-valid @enderror"
                                         id="vote" name="vote" placeholder="Inserisci il voto"
-                                        value="{{ old('vote') }}" required>
+                                        value="{{ old('vote', $game->vote) }}" required>
                                     @error('vote')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -81,7 +81,7 @@
                                     <input type="url"
                                         class="form-control @error('image') is-invalid @elseif(old('image')) is-valid @enderror"
                                         id="image" name="image" placeholder="Inserisci copertina"
-                                        value="{{ old('image') }}" required>
+                                        value="{{ old('image', $game->image) }}" required>
                                     @error('image')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -89,28 +89,26 @@
                             </div>
                             <div class="col-1">
                                 <div class="mb-3">
-                                    <img src="https://marcolanci.it/utils/placeholder.jpg" alt="preview" class="img-fluid"
-                                        id="preview">
+                                    <img src="{{ $game->image }}" alt="preview" class="img-fluid"id="preview">
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="mb-3">
                                     <label for="description">Descrizione</label>
                                     <textarea class="form-control @error('description') is-invalid @elseif(old('description')) is-valid @enderror"
-                                        placeholder="Inserisci descrizione" id="description" name="description" style="height: 100px" required>{{ old('description') }}</textarea>
+                                        placeholder="Inserisci descrizione" id="description" name="description" style="height: 100px" required>{{ old('description', $game->description) }}</textarea>
                                     @error('description')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div>
                             <div class="d-flex justify-content-between">
-                                <button class="btn btn-success" type="submit">Invia</button>
+                                <button class="btn btn-success" type="submit">Salva</button>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
-
         </div>
     </div>
 @endsection
