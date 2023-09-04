@@ -59,7 +59,7 @@ class GameController extends Controller
      */
     public function edit(Game $game)
     {
-        //
+        return view('admin.games.edit', compact('game'));
     }
 
     /**
@@ -67,7 +67,15 @@ class GameController extends Controller
      */
     public function update(Request $request, Game $game)
     {
-        //
+        $data = $request->all();
+        $game->title = $data['title'];
+        $game->price = $data['price'];
+        $game->date_release = $data['date_release'];
+        $game->image = $data['image'];
+        $game->vote = $data['vote'];
+        $game->description = $data['description'];
+        $game->save();
+        return to_route('admin.games.index');
     }
 
     /**
