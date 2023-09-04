@@ -63,6 +63,22 @@ class GameController extends Controller
      */
     public function destroy(Game $game)
     {
-        //
+        $game->delete();
+        return to_route('admin.games.index');
+    }
+
+    // Trash Game
+    public function trash()
+    {
+        $game = Game::onlyTrashed()->get();
+        return view('admin.games.trash', compact('games'));
+    }
+
+    // Drop game
+    public function drop(string $id)
+    {
+        $game = Game::onlyTrashed()->findOrFail($id);
+        $game->forceDelete();
+        return to_route('admin.games.trash');
     }
 }
