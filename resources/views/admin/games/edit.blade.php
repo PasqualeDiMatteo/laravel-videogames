@@ -87,6 +87,11 @@
                                     @enderror
                                 </div>
                             </div>
+                            <div class="col-1">
+                                <div class="mb-3">
+                                    <img src="{{ $game->image }}" alt="preview" class="img-fluid"id="preview">
+                                </div>
+                            </div>
                             <div class="col-12">
                                 <div class="mb-3">
                                     <label for="description">Descrizione</label>
@@ -106,4 +111,8 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    @vite('resources/js/image-preview')
 @endsection
