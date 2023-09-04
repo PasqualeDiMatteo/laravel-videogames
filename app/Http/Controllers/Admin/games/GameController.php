@@ -23,7 +23,7 @@ class GameController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.games.create');
     }
 
     /**
@@ -31,7 +31,19 @@ class GameController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $game = new Game();
+        $request->validate([
+            'title' => 'required|string',
+            'price' => 'required|string',
+            'date_release' => 'required|string',
+            'image' => 'required|string',
+            'vote' => 'required|string',
+            'description' => 'required|string',
+        ]);
+        $game->fill($data);
+        $game->save();
+        return to_route('admin.games.show', $game)->with("type", "success")->with("message", "Gioco caricato con successo");
     }
 
     /**
@@ -39,7 +51,7 @@ class GameController extends Controller
      */
     public function show(Game $game)
     {
-        //
+        return view('admin.games.show', compact('game'));
     }
 
     /**
@@ -71,6 +83,30 @@ class GameController extends Controller
      */
     public function destroy(Game $game)
     {
-        //
+        $game->delete();
+        return to_route('admin.games.index')->with("type", "success")->with("message", "Gioco cancellato con successo");
+    }
+
+    // Trash Game
+    public function trash()
+    {
+        $games = Game::onlyTrashed()->get();
+        return view('admin.games.trash', compact('games'));
+    }
+
+    // Drop Game
+    public function drop(string $id)
+    {
+        $game = Game::onlyTrashed()->findOrFail($id);
+        $game->forceDelete();
+        return to_route('admin.games.trash')->with("type", "success")->with("message", "Gioco cancellato definitivamente");
+    }
+
+    // Restore Game
+    public function restore(string $id)
+    {
+        $game = Game::onlyTrashed()->findOrFail($id);
+        $game->restore();
+        return to_route('admin.games.trash');
     }
 }
