@@ -75,7 +75,7 @@ class GameController extends Controller
         $game->vote = $data['vote'];
         $game->description = $data['description'];
         $game->save();
-        return to_route('admin.games.index');
+        return to_route('admin.games.index')->with('type', 'success')->with('message', 'Gioco modificato con successo');
     }
 
     /**
