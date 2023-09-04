@@ -30,7 +30,7 @@
                         <td>
                             <div class="d-flex gap-2 justify-content-end">
                                 <a href="" class="btn btn-primary">Info</a>
-                                <a href="" class="btn btn-warning">Modifica</a>
+                                <a href="{{ route('admin.games.edit', $game) }}" class="btn btn-warning">Modifica</a>
                                 <form action="">
                                     <button class="btn btn-danger">Elimina</button>
                                 </form>

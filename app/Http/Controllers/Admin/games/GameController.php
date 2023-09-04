@@ -47,7 +47,7 @@ class GameController extends Controller
      */
     public function edit(Game $game)
     {
-        //
+        return view('admin.games.edit', compact('game'));
     }
 
     /**
@@ -55,7 +55,10 @@ class GameController extends Controller
      */
     public function update(Request $request, Game $game)
     {
-        //
+        $data = $request->all();
+        $game->update($data);
+        $game->save();
+        return to_route('admin.games.index');
     }
 
     /**
