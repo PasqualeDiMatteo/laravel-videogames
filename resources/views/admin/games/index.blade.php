@@ -4,7 +4,7 @@
     <div class="container mt-5">
         <div class="d-flex justify-content-end">
             {{-- Button added --}}
-            <a href="" class="btn btn-success">Aggiungi un gioco</a>
+            <a href="{{ route('admin.games.create') }}" class="btn btn-success">Aggiungi un gioco</a>
         </div>
         {{-- Table --}}
         <table class="table">
@@ -29,9 +29,11 @@
                         <td>{{ $game->date_release }}</td>
                         <td>
                             <div class="d-flex gap-2 justify-content-end">
-                                <a href="" class="btn btn-primary">Info</a>
-                                <a href="{{ route('admin.games.edit', $game) }}" class="btn btn-warning">Modifica</a>
-                                <form action="">
+                                <a href="{{ route('admin.games.show', $game) }}" class="btn btn-primary">Info</a>
+                                <a href="" class="btn btn-warning">Modifica</a>
+                                <form action="{{ route('admin.games.destroy', $game) }}"method="POST">
+                                    @csrf
+                                    @method('DELETE')
                                     <button class="btn btn-danger">Elimina</button>
                                 </form>
                             </div>
@@ -41,5 +43,6 @@
                     <h1>Non ci sono giochi</h1>
                 @endforelse
             </tbody>
+            <a href="{{ route('admin.games.trash') }}">Cestino</a>
     </div>
 @endsection

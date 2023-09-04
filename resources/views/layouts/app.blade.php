@@ -99,7 +99,12 @@
             </div>
         </nav>
 
+        {{-- Main --}}
         <main class="">
+            <div class="container">
+                {{-- Alert --}}
+                @include('includes.alert')
+            </div>
             @yield('content')
         </main>
 

@@ -23,6 +23,17 @@ Route::get('/', [GuestHomeController::class, "index"])->name("guest.home");
 
 Route::middleware('auth')->name("admin.")->prefix("/admin")->group(function () {
     Route::get('/', [AdminHomeController::class, "index"])->name('index');
+
+    // Trash Route
+    Route::get('/games/trash', [GameController::class, 'trash'])->name('games.trash');
+
+    // Drop games Route 
+    Route::delete('/games/{game}/drop', [GameController::class, 'drop'])->name('games.drop');
+
+    // Restore Games Route 
+    Route::patch('/games/{game}/restore', [GameController::class, 'restore'])->name('games.restore');
+
+    // All Resources
     Route::resource("/games", GameController::class);
 });
 
