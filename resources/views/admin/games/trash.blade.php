@@ -19,7 +19,8 @@
                         <div class="d-flex justify-content-evenly">
 
                             {{-- Delete Button --}}
-                            <form class="form-delete" action="{{ route('admin.games.drop', $game) }}" method="POST">
+                            <form class="form-delete delete-btn" action="{{ route('admin.games.drop', $game) }}"
+                                method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn btn-danger">Elimina Definitivamente</button>
@@ -49,4 +50,16 @@
         </div>
     </div>
 
+@endsection
+@section('scripts')
+    <script>
+        const deleteForms = document.querySelectorAll('.delete-btn');
+        deleteForms.forEach(form => {
+            form.addEventListener('submit', e => {
+                e.preventDefault();
+                const hasConfirmed = confirm('Sei sicuro di voler eliminate questo elemento?');
+                if (hasConfirmed) form.submit();
+            });
+        });
+    </script>
 @endsection
