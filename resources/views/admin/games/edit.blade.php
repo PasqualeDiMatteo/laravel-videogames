@@ -27,6 +27,8 @@
                         @csrf
                         @method('PUT')
                         <div class="row">
+
+                            {{-- Title Form --}}
                             <div class="col-6">
                                 <div class="mb-3">
                                     <label for="title">Titolo</label>
@@ -39,6 +41,8 @@
                                     @enderror
                                 </div>
                             </div>
+
+                            {{-- Release Price Form --}}
                             <div class="col-6">
                                 <div class="mb-3">
                                     <label for="price">Prezzo</label>
@@ -51,6 +55,8 @@
                                     @enderror
                                 </div>
                             </div>
+
+                            {{-- Release Date Form --}}
                             <div class="col-6">
                                 <div class="mb-3">
                                     <label for="date_release">Data Uscita</label>
@@ -63,6 +69,8 @@
                                     @enderror
                                 </div>
                             </div>
+
+                            {{-- Vote Form --}}
                             <div class="col-6">
                                 <div class="mb-3">
                                     <label for="vote">Voto</label>
@@ -75,6 +83,8 @@
                                     @enderror
                                 </div>
                             </div>
+
+                            {{-- Developer Form --}}
                             <div class="col-6">
                                 <div class="mb-3">
 
@@ -93,6 +103,29 @@
                                     @enderror
                                 </div>
                             </div>
+
+
+                            {{-- Consoles Form  --}}
+                            <div class="col-6">
+                                <div class="mb-3">
+
+                                    <label for="console_id">Piattaforma</label>
+                                    <select class="form-select" id="console_id" name="console_id"
+                                        @error('console_id') is-invalid @elseif(old('console_id'))is-valid @enderror>
+                                        <option value="">Nessuna
+                                        </option>
+                                        @foreach ($consoles as $console)
+                                            <option @if (old('console_id', $game->console_id) == $console->id) selected @endif
+                                                value="{{ $console->id }}">{{ $console->label }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('console_id')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            {{-- Publisher Form  --}}
                             <div class="col-6">
                                 <div class="mb-3">
                                     <label for="publisher">Publisher</label>
@@ -112,9 +145,8 @@
                                 </div>
                             </div>
 
-
+                            {{-- Cover Form  --}}
                             <div class="col-11">
-
                                 <div class="mb-3">
                                     <label for="image">Copertina</label>
                                     <input type="url"
@@ -131,10 +163,13 @@
                                     <img src="{{ $game->image }}" alt="preview" class="img-fluid"id="preview">
                                 </div>
                             </div>
+
+                            {{-- Description Form  --}}
                             <div class="col-12">
                                 <div class="mb-3">
                                     <label for="description">Descrizione</label>
-                                    <textarea class="form-control @error('description') is-invalid @elseif(old('description')) is-valid @enderror"
+                                    <textarea
+                                        class="form-control @error('description') is-invalid @elseif(old('description')) is-valid @enderror"
                                         placeholder="Inserisci descrizione" id="description" name="description" style="height: 100px" required>{{ old('description', $game->description) }}</textarea>
                                     @error('description')
                                         <div class="invalid-feedback">{{ $message }}</div>
