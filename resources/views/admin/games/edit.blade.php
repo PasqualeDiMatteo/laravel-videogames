@@ -130,8 +130,8 @@
                                     @foreach ($consoles as $console)
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                @if (in_array($game->id, old('consoles', $game_console_ids ?? []))) checked @endif
-                                                id="console-{{ $console->id }}" value="{{ $console->id }}"
+                                                @if (in_array($console->id, old('consoles', $game_console_ids ?? []))) checked @endif
+                                                id="tech-{{ $console->id }}" value="{{ $console->id }}"
                                                 name="consoles[]">
                                             <label class="form-check-label"
                                                 for="console-{{ $console->id }}">{{ $console->label }}</label>

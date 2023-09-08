@@ -106,21 +106,12 @@ class GameController extends Controller
             'console_id' => 'nullable|exists:consoles,id'
 
         ]);
-        $game->title = $data['title'];
-        $game->price = $data['price'];
-        $game->date_release = $data['date_release'];
-        $game->image = $data['image'];
-        $game->vote = $data['vote'];
-        $game->description = $data['description'];
-        $game->developer_id = $data['developer_id'];
-        $game->publisher_id = $data['publisher_id'];
-        $game->save();
 
+        $game->update($data);
 
         // ATTACH if consoles exitsts
-        if ($request->console_id) {
-            $game->consoles()->sync($request->console_id);
-        }
+        if (!Arr::exists($data, 'consoles') && count($game->consoles)) $game->consoles()->detach();
+        elseif (Arr::exists($data, 'consoles')) $game->consoles()->sync($data['consoles']);
         return to_route('admin.games.index')->with('type', 'success')->with('message', 'Gioco modificato con successo');
     }
 

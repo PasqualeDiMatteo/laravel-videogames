@@ -104,19 +104,17 @@
                             </div>
 
                             {{-- Consoles Form  --}}
-                            <div class="col-6">
+                            <div class="col-12">
                                 <div class="mb-3">
-                                    <label for="vote">Piattaforma</label>
-                                    <select class="form-select" id="console_id" name="console_id"
-                                        @error('console_id') is-invalid @elseif(old('console_id'))is-valid @enderror>
-                                        <option value="">Nessuna
-                                        </option>
-                                        @foreach ($consoles as $console)
-                                            <option @if (old('console_id') == $console->id) selected @endif
-                                                value="{{ $console->id }}">{{ $console->label }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('developer_id')
+                                    @foreach ($consoles as $console)
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" id="tech-{{ $console->id }}"
+                                                value="{{ $console->id }}" name="consoles[]">
+                                            <label class="form-check-label"
+                                                for="console-{{ $console->id }}">{{ $console->label }}</label>
+                                        </div>
+                                    @endforeach
+                                    @error('console_id')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
