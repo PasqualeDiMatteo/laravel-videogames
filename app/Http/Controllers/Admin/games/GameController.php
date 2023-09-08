@@ -27,10 +27,8 @@ class GameController extends Controller
     {
 
         $developers = Developer::all();
-        return view('admin.games.create', compact('developers'));
-
         $publishers = Publisher::select('id', 'label')->get();
-        return view('admin.games.create', compact('publishers'));
+        return view('admin.games.create', compact('publishers', "developers"));
     }
 
     /**
@@ -72,9 +70,8 @@ class GameController extends Controller
     {
 
         $developers = Developer::all();
-        return view('admin.games.edit', compact('game', 'developers'));
         $publishers = Publisher::select('id', 'label')->get();
-        return view('admin.games.edit', compact('game', 'publishers'));
+        return view('admin.games.edit', compact('game', 'publishers', "developers"));
     }
 
     /**

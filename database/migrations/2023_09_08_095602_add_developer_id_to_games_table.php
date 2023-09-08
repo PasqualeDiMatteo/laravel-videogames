@@ -23,7 +23,7 @@ return new class extends Migration
     {
         Schema::table('games', function (Blueprint $table) {
             $table->dropForeign('games_developer_id_foreign');
-            $table->dropColumn('developre_id');
+            $table->dropColumn('developer_id');
         });
     }
 };

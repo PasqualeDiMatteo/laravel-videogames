@@ -77,7 +77,6 @@
                             </div>
                             <div class="col-6">
                                 <div class="mb-3">
-
                                     <label for="vote">Sviluppatore</label>
                                     <select class="form-select" id="developer_id" name="developer_id"
                                         @error('developer_id') is-invalid @elseif(old('developer_id'))is-valid @enderror>
@@ -89,11 +88,12 @@
                                         @endforeach
                                     </select>
                                     @error('developer_id')
-                                  </div>
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
-
-                                <div class="col-6">
-                                  <div class="mb-3">
+                            </div>
+                            <div class="col-6">
+                                <div class="mb-3">
                                     <label for="publisher">Publisher</label>
                                     <select
                                         class="form-select @error('publisher_id') is-invalid @elseif(old('publisher_id')) is-valid @enderror"
@@ -106,11 +106,10 @@
                                         @endforeach
                                     </select>
                                     @error('publisher_id')
-
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
-                                  </div>
-                              </div>
+                                </div>
+                            </div>
                             <div class="col-11">
                                 <div class="mb-3">
                                     <label for="image">Copertina</label>
@@ -146,7 +145,6 @@
                     </form>
                 </div>
             </div>
-
         </div>
     </div>
 @endsection

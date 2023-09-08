@@ -89,9 +89,11 @@
                                         @endforeach
                                     </select>
                                     @error('developer_id')
-                                   </div>
-                              </div>  
-                              <div class="col-6">
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-6">
                                 <div class="mb-3">
                                     <label for="publisher">Publisher</label>
                                     <select
@@ -105,7 +107,6 @@
                                         @endforeach
                                     </select>
                                     @error('publisher_id')
-
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
