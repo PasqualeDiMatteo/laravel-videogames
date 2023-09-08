@@ -15,15 +15,15 @@ return new class extends Migration
             $table->id();
 
             //Foreign Keys - Short version
-            // $table->foreignId('game_id')->constrained()->onDelete('cascade');
-            // $table->foreignId('console_id')->constrained()->onDelete('cascade');
+            $table->foreignId('game_id')->constrained()->onDelete('cascade');
+            $table->foreignId('console_id')->constrained()->onDelete('cascade');
 
             //Foreign Keys - Long version
-            $table->unsignedBigInteger('game_id')->nullable()->after('id');
-            $table->foreign('game_id')->references('id')->on('games')->nullOnDelete();
+            // $table->unsignedBigInteger('game_id')->nullable()->after('id');
+            // $table->foreign('game_id')->references('id')->on('games')->nullOnDelete();
 
-            $table->unsignedBigInteger('console_id')->nullable()->after('id');
-            $table->foreign('console_id')->references('id')->on('consoles')->nullOnDelete();
+            // $table->unsignedBigInteger('console_id')->nullable()->after('id');
+            // $table->foreign('console_id')->references('id')->on('consoles')->nullOnDelete();
 
             $table->timestamps();
         });
