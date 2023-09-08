@@ -15,8 +15,8 @@ class ConsoleSeeder extends Seeder
     {
         $console = new Console();
 
-        $console->label('PS4');
-        $console->color('black');
+        $console->label = 'PS4';
+        $console->color = 'black';
 
         $console->save();
     }
