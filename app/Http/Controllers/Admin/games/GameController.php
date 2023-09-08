@@ -55,7 +55,6 @@ class GameController extends Controller
         ]);
 
 
-
         $game->fill($data);
         $game->save();
 
