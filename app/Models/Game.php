@@ -13,6 +13,13 @@ class Game extends Model
     protected $fillable = ['title', 'price', 'date_release', 'image', 'vote', 'description', 'developer_id','publisher_id'];
     use SoftDeletes;
 
+
+    // Many to Many on Consoles
+    public function consoles()
+    {
+        return $this->belongsToMany(Console::class);
+    }
+  
     public function genres()
     {
         return $this->belongsToMany(Genre::class);
@@ -21,7 +28,7 @@ class Game extends Model
     {
         return $this->belongsTo(Publisher::class);
     }
-    public function devloper()
+    public function developer()
     {
         return $this->belongsTo(Developer::class);
     }
