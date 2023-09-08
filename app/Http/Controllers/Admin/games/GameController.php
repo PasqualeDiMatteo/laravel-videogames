@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin\Games;
 use App\Http\Controllers\Controller;
 use App\Models\Game;
 use App\Models\Publisher;
+use App\Models\Genre;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class GameController extends Controller
 {
@@ -25,7 +27,8 @@ class GameController extends Controller
     public function create()
     {
         $publishers = Publisher::select('id', 'label')->get();
-        return view('admin.games.create', compact('publishers'));
+        $genres = Genre::select('id', 'name')->get();
+        return view('admin.games.create', compact('publishers', 'genres'));
     }
 
     /**
@@ -42,10 +45,12 @@ class GameController extends Controller
             'image' => 'required|string',
             'vote' => 'required|string',
             'description' => 'required|string',
-            'publisher_id' => 'nullable|exists:publishers,id'
+            'publisher_id' => 'nullable|exists:publishers,id',
+            'genre_id' => 'nullable|exists:genres,id'
         ]);
         $game->fill($data);
         $game->save();
+        if (Arr::exists($data, 'genres')) $game->genres()->attach($data['genres']);
         return to_route('admin.games.show', $game)->with("type", "success")->with("message", "Gioco caricato con successo");
     }
 
@@ -63,7 +68,9 @@ class GameController extends Controller
     public function edit(Game $game)
     {
         $publishers = Publisher::select('id', 'label')->get();
-        return view('admin.games.edit', compact('game', 'publishers'));
+        $genres = Genre::select('id', 'name')->get();
+        $game_genre_ids = $game->genres->pluck('id')->toArray();
+        return view('admin.games.edit', compact('game', 'publishers', 'genres', 'game_genre_ids'));
     }
 
     /**
@@ -79,16 +86,12 @@ class GameController extends Controller
             'image' => 'required|string',
             'vote' => 'required|string',
             'description' => 'required|string',
-            'publisher_id' => 'nullable|exists:publishers,id'
+            'publisher_id' => 'nullable|exists:publishers,id',
+            'genre_id' => 'nullable|exists:genres,id'
         ]);
-        $game->title = $data['title'];
-        $game->price = $data['price'];
-        $game->date_release = $data['date_release'];
-        $game->image = $data['image'];
-        $game->vote = $data['vote'];
-        $game->description = $data['description'];
-        $game->publisher_id = $data['publisher_id'];
-        $game->save();
+        $game->update($data);
+        if (!Arr::exists($data, 'genres') && count($game->genres)) $game->genres()->detach();
+        elseif (Arr::exists($data, 'genres')) $game->genres()->sync($data['genres']);
         return to_route('admin.games.index')->with('type', 'success')->with('message', 'Gioco modificato con successo');
     }
 

@@ -93,6 +93,26 @@
                                     @enderror
                                 </div>
                             </div>
+                            <div class="col-6">
+                                <h5>genre</h5>
+                                <div class="mb-2">
+                                    <div class="form-check">
+                                        @foreach ($genres as $genre)
+                                            <div class="form-check form-check-inline ">
+                                                <input class="form-check-input" type="checkbox" name="genres[]"
+                                                    id="genre-{{ $genre->id }}" value="{{ $genre->id }}">
+                                                <label class="form-check-label" for="genre-{{ $genre->id }}">
+                                                    {{ $genre->name }}
+                                                </label>
+                                            </div>
+                                        @endforeach
+                                        @error('genre_id')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="col-11">
                                 <div class="mb-3">
                                     <label for="image">Copertina</label>
