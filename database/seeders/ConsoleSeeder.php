@@ -13,11 +13,15 @@ class ConsoleSeeder extends Seeder
      */
     public function run(): void
     {
+
+        $labels = ['PS4', 'PC', 'Switch', 'Xbox'];
         $console = new Console();
 
-        $console->label = 'PS4';
-        $console->color = 'black';
-
-        $console->save();
+        foreach ($labels as $label) {
+            $console = new Console();
+            $console->label = $label;
+            $console->color = 'Black';
+            $console->save();
+        }
     }
 }
