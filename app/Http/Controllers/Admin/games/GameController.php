@@ -8,6 +8,7 @@ use App\Models\Developer;
 use App\Models\Game;
 use App\Models\Publisher;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class GameController extends Controller
 {
@@ -48,11 +49,21 @@ class GameController extends Controller
             'vote' => 'required|string',
             'description' => 'required|string',
             'developer_id' => 'nullable|exists:developers,id',
-            'publisher_id' => 'nullable|exists:publishers,id'
+            'publisher_id' => 'nullable|exists:publishers,id',
+            'console_id' => 'nullable|exists:consoles,id'
 
         ]);
+
+
+
         $game->fill($data);
         $game->save();
+
+        // ATTACH if consoles exitsts
+        if (Arr::exists($data, 'consoles')) {
+            $game->consoles()->attach($data['consoles']);
+        }
+
         return to_route('admin.games.show', $game)->with("type", "success")->with("message", "Gioco caricato con successo");
     }
 
@@ -91,7 +102,8 @@ class GameController extends Controller
             'vote' => 'required|string',
             'description' => 'required|string',
             'developer_id' => 'nullable|exists:developers,id',
-            'publisher_id' => 'nullable|exists:publishers,id'
+            'publisher_id' => 'nullable|exists:publishers,id',
+            'console_id' => 'nullable|exists:consoles,id'
 
         ]);
         $game->title = $data['title'];
@@ -102,6 +114,7 @@ class GameController extends Controller
         $game->description = $data['description'];
         $game->developer_id = $data['developer_id'];
         $game->publisher_id = $data['publisher_id'];
+        $game->console_id = $data['console_id'];
         $game->save();
         return to_route('admin.games.index')->with('type', 'success')->with('message', 'Gioco modificato con successo');
     }
@@ -131,7 +144,12 @@ class GameController extends Controller
     public function drop(string $id)
     {
         $game = Game::onlyTrashed()->findOrFail($id);
+
+        // Remove relations before delete
+        if (count($game->consoles)) $game->consoles()->detach();
+
         $game->forceDelete();
+
         return to_route('admin.games.trash')->with("type", "success")->with("message", "Gioco cancellato definitivamente");
     }
 
