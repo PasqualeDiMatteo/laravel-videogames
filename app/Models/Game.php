@@ -12,4 +12,10 @@ class Game extends Model
     use HasFactory;
     protected $fillable = ['title', 'price', 'date_release', 'image', 'vote', 'description'];
     use SoftDeletes;
+
+    // Many to Many on Consoles
+    public function consoles()
+    {
+        return $this->belongsToMany(Console::class);
+    }
 }
