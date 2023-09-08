@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Games;
 
 use App\Http\Controllers\Controller;
+use App\Models\Console;
 use App\Models\Developer;
 use App\Models\Game;
 use App\Models\Publisher;
@@ -28,7 +29,8 @@ class GameController extends Controller
 
         $developers = Developer::all();
         $publishers = Publisher::select('id', 'label')->get();
-        return view('admin.games.create', compact('publishers', "developers"));
+        $consoles = Console::select('id', 'label')->get();
+        return view('admin.games.create', compact('publishers', "developers", "consoles"));
     }
 
     /**
@@ -71,7 +73,8 @@ class GameController extends Controller
 
         $developers = Developer::all();
         $publishers = Publisher::select('id', 'label')->get();
-        return view('admin.games.edit', compact('game', 'publishers', "developers"));
+        $consoles = Console::select('id', 'label')->get();
+        return view('admin.games.edit', compact('game', 'publishers', "developers", 'consoles'));
     }
 
     /**
