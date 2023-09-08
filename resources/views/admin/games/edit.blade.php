@@ -104,27 +104,6 @@
                                 </div>
                             </div>
 
-
-                            {{-- Consoles Form  --}}
-                            <div class="col-6">
-                                <div class="mb-3">
-
-                                    <label for="console_id">Piattaforma</label>
-                                    <select class="form-select" id="console_id" name="console_id"
-                                        @error('console_id') is-invalid @elseif(old('console_id'))is-valid @enderror>
-                                        <option value="">Nessuna
-                                        </option>
-                                        @foreach ($consoles as $console)
-                                            <option @if (old('console_id', $game->console_id) == $console->id) selected @endif
-                                                value="{{ $console->id }}">{{ $console->label }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('console_id')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-
                             {{-- Publisher Form  --}}
                             <div class="col-6">
                                 <div class="mb-3">
@@ -140,6 +119,25 @@
                                         @endforeach
                                     </select>
                                     @error('publisher_id')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            {{-- Consoles Form  --}}
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    @foreach ($consoles as $console)
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox"
+                                                @if (in_array($game->id, old('consoles', $game_console_ids ?? []))) checked @endif
+                                                id="console-{{ $console->id }}" value="{{ $console->id }}"
+                                                name="consoles[]">
+                                            <label class="form-check-label"
+                                                for="console-{{ $console->id }}">{{ $console->label }}</label>
+                                        </div>
+                                    @endforeach
+                                    @error('console_id')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>

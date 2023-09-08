@@ -84,7 +84,8 @@ class GameController extends Controller
         $developers = Developer::all();
         $publishers = Publisher::select('id', 'label')->get();
         $consoles = Console::select('id', 'label')->get();
-        return view('admin.games.edit', compact('game', 'publishers', "developers", 'consoles'));
+        $game_console_ids = $game->consoles->pluck('id')->toArray();
+        return view('admin.games.edit', compact('game', 'publishers', "developers", 'consoles', 'game_console_ids'));
     }
 
     /**
