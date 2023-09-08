@@ -31,7 +31,6 @@ class GameController extends Controller
 
         $publishers = Publisher::select('id', 'label')->get();
         return view('admin.games.create', compact('publishers'));
-
     }
 
     /**
@@ -48,7 +47,7 @@ class GameController extends Controller
             'image' => 'required|string',
             'vote' => 'required|string',
             'description' => 'required|string',
-            'developer_id' => 'nullable|exists:developers,id'
+            'developer_id' => 'nullable|exists:developers,id',
             'publisher_id' => 'nullable|exists:publishers,id'
 
         ]);
@@ -76,7 +75,6 @@ class GameController extends Controller
         return view('admin.games.edit', compact('game', 'developers'));
         $publishers = Publisher::select('id', 'label')->get();
         return view('admin.games.edit', compact('game', 'publishers'));
-
     }
 
     /**
@@ -92,8 +90,7 @@ class GameController extends Controller
             'image' => 'required|string',
             'vote' => 'required|string',
             'description' => 'required|string',
-
-            'developer_id' => 'nullable|exists:developers,id'
+            'developer_id' => 'nullable|exists:developers,id',
             'publisher_id' => 'nullable|exists:publishers,id'
 
         ]);
