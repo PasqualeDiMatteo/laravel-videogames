@@ -13,6 +13,7 @@
                     <th scope="col">#</th>
                     <th scope="col">Titolo</th>
                     <th scope="col">Publisher</th>
+                    <th scope="col">Genre</th>
                     <th scope="col">Prezzo</th>
                     <th scope="col">Voto</th>
                     <th scope="col">Data d'uscita</th>
@@ -28,6 +29,13 @@
                         <td>
                             @if ($game->publisher)
                                 <span class="badge bg-{{ $game->publisher->color }}">{{ $game->publisher->label }}</span>
+                            @else
+                                -
+                            @endif
+                        </td>
+                        <td>
+                            @if ($game->genre)
+                                <span class="badge bg-{{ $game->genre->color }}">{{ $game->genre->label }}</span>
                             @else
                                 -
                             @endif

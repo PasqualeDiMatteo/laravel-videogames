@@ -123,6 +123,28 @@
                                     @enderror
                                 </div>
                             </div>
+                            
+                                                        {{-- Genre Form  --}}
+                            <div class="col-6">
+                                <h5>genre</h5>
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        @foreach ($genres as $genre)
+                                            <div class="form-check form-check-inline my-3">
+                                                <input class="form-check-input" type="checkbox" name="genres[]"
+                                                    id="genre-{{ $genre->id }}" value="{{ $genre->id }}"
+                                                    @if (in_array($genre->id, old('genre', $game_genre_ids ?? []))) checked @endif>
+                                                <label class="form-check-label" for="genre-{{ $genre->id }}">
+                                                    {{ $genre->name }}
+                                                </label>
+                                            </div>
+                                        @endforeach
+                                        @error('genre_id')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
 
                             {{-- Consoles Form  --}}
                             <div class="col-12">
