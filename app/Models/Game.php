@@ -10,15 +10,19 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Game extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'price', 'date_release', 'image', 'vote', 'description'];
+    protected $fillable = ['title', 'price', 'date_release', 'image', 'vote', 'description', 'developer_id'];
     use SoftDeletes;
 
     public function genres()
     {
         return $this->belongsToMany(Genre::class);
-
+    }
     public function publisher()
     {
         return $this->belongsTo(Publisher::class);
+    }
+    public function devloper()
+    {
+        return $this->belongsTo(Developer::class);
     }
 }

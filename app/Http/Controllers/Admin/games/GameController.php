@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Games;
 
 use App\Http\Controllers\Controller;
+use App\Models\Developer;
 use App\Models\Game;
 use Illuminate\Http\Request;
 
@@ -23,7 +24,8 @@ class GameController extends Controller
      */
     public function create()
     {
-        return view('admin.games.create');
+        $developers = Developer::all();
+        return view('admin.games.create', compact('developers'));
     }
 
     /**
@@ -40,6 +42,7 @@ class GameController extends Controller
             'image' => 'required|string',
             'vote' => 'required|string',
             'description' => 'required|string',
+            'developer_id' => 'nullable|exists:developers,id'
         ]);
         $game->fill($data);
         $game->save();
@@ -51,6 +54,7 @@ class GameController extends Controller
      */
     public function show(Game $game)
     {
+
         return view('admin.games.show', compact('game'));
     }
 
@@ -59,7 +63,8 @@ class GameController extends Controller
      */
     public function edit(Game $game)
     {
-        return view('admin.games.edit', compact('game'));
+        $developers = Developer::all();
+        return view('admin.games.edit', compact('game', 'developers'));
     }
 
     /**
@@ -75,6 +80,7 @@ class GameController extends Controller
             'image' => 'required|string',
             'vote' => 'required|string',
             'description' => 'required|string',
+            'developer_id' => 'nullable|exists:developers,id'
         ]);
         $game->title = $data['title'];
         $game->price = $data['price'];
@@ -82,6 +88,7 @@ class GameController extends Controller
         $game->image = $data['image'];
         $game->vote = $data['vote'];
         $game->description = $data['description'];
+        $game->developer_id = $data['developer_id'];
         $game->save();
         return to_route('admin.games.index')->with('type', 'success')->with('message', 'Gioco modificato con successo');
     }
