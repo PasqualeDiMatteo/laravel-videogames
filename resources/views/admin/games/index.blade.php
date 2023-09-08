@@ -12,6 +12,7 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Titolo</th>
+                    <th scope="col">Publisher</th>
                     <th scope="col">Prezzo</th>
                     <th scope="col">Voto</th>
                     <th scope="col">Data d'uscita</th>
@@ -24,6 +25,13 @@
                     <tr>
                         <th scope="row">{{ $game->id }}</th>
                         <td>{{ $game->title }}</td>
+                        <td>
+                            @if ($game->publisher)
+                                <span class="badge bg-{{ $game->publisher->color }}">{{ $game->publisher->label }}</span>
+                            @else
+                                -
+                            @endif
+                        </td>
                         <td>{{ $game->price }}</td>
                         <td>{{ $game->vote }}</td>
                         <td>{{ $game->date_release }}</td>

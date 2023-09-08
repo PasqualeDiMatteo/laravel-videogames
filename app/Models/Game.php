@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Game extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'price', 'date_release', 'image', 'vote', 'description', 'developer_id'];
+    protected $fillable = ['title', 'price', 'date_release', 'image', 'vote', 'description', 'developer_id','publisher_id'];
     use SoftDeletes;
 
     public function genres()
