@@ -12,4 +12,9 @@ class Game extends Model
     use HasFactory;
     protected $fillable = ['title', 'price', 'date_release', 'image', 'vote', 'description'];
     use SoftDeletes;
+
+    public function genres()
+    {
+        return $this->belongsToMany(Genre::class);
+    }
 }
