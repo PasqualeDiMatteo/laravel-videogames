@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('console_game', function (Blueprint $table) {
             $table->id();
+
+            //Foreign Keys
+            $table->foreignId('game_id')->constrained()->onDelete('cascade');
+            $table->foreignId('console_id')->constrained()->onDelete('cascade');
+
             $table->timestamps();
         });
     }
