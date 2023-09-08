@@ -11,8 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('games', function (Blueprint $table) {
-            $table->foreignId('developer_id')->nullable()->after('id')->constrained()->nullOnDelete();
+        Schema::create('consoles', function (Blueprint $table) {
+            $table->id();
+
+            $table->string('label')->unique();
+            $table->string('color', 20)->nullable()->default('info');
+
+            $table->timestamps();
         });
     }
 
@@ -21,9 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('games', function (Blueprint $table) {
-            $table->dropForeign('games_developer_id_foreign');
-            $table->dropColumn('developer_id');
-        });
+        Schema::dropIfExists('consoles');
     }
 };

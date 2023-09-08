@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\Games\GameController;
 use App\Http\Controllers\Admin\HomeController as AdminHomeController;
+use App\Http\Controllers\Admin\publisher\PublisherController;
 use App\Http\Controllers\Guest\HomeController as GuestHomeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -17,12 +18,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Home Guest
 Route::get('/', [GuestHomeController::class, "index"])->name("guest.home");
 
 
 
 Route::middleware('auth')->name("admin.")->prefix("/admin")->group(function () {
+    // Home Admin
     Route::get('/', [AdminHomeController::class, "index"])->name('index');
+
+    //Games 
 
     // Trash Route
     Route::get('/games/trash', [GameController::class, 'trash'])->name('games.trash');
@@ -35,6 +40,12 @@ Route::middleware('auth')->name("admin.")->prefix("/admin")->group(function () {
 
     // All Resources
     Route::resource("/games", GameController::class);
+
+
+    // Publisher
+
+    // All Resources
+    Route::resource("/publishers", PublisherController::class);
 });
 
 Route::middleware('auth')->group(function () {

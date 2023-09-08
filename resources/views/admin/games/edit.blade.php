@@ -27,6 +27,8 @@
                         @csrf
                         @method('PUT')
                         <div class="row">
+
+                            {{-- Title Form --}}
                             <div class="col-6">
                                 <div class="mb-3">
                                     <label for="title">Titolo</label>
@@ -39,6 +41,8 @@
                                     @enderror
                                 </div>
                             </div>
+
+                            {{-- Release Price Form --}}
                             <div class="col-6">
                                 <div class="mb-3">
                                     <label for="price">Prezzo</label>
@@ -51,6 +55,8 @@
                                     @enderror
                                 </div>
                             </div>
+
+                            {{-- Release Date Form --}}
                             <div class="col-6">
                                 <div class="mb-3">
                                     <label for="date_release">Data Uscita</label>
@@ -63,6 +69,8 @@
                                     @enderror
                                 </div>
                             </div>
+
+                            {{-- Vote Form --}}
                             <div class="col-6">
                                 <div class="mb-3">
                                     <label for="vote">Voto</label>
@@ -75,6 +83,28 @@
                                     @enderror
                                 </div>
                             </div>
+
+                            {{-- Developer Form --}}
+                            <div class="col-6">
+                                <div class="mb-3">
+
+                                    <label for="developer_id">Sviluppatore</label>
+                                    <select class="form-select" id="developer_id" name="developer_id"
+                                        @error('developer_id') is-invalid @elseif(old('developer_id'))is-valid @enderror>
+                                        <option value="">Nessuna
+                                        </option>
+                                        @foreach ($developers as $developer)
+                                            <option @if (old('developer_id', $game->developer_id) == $developer->id) selected @endif
+                                                value="{{ $developer->id }}">{{ $developer->label }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('developer_id')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            {{-- Publisher Form  --}}
                             <div class="col-6">
                                 <div class="mb-3">
                                     <label for="publisher">Publisher</label>
@@ -93,6 +123,8 @@
                                     @enderror
                                 </div>
                             </div>
+                            
+                                                        {{-- Genre Form  --}}
                             <div class="col-6">
                                 <h5>genre</h5>
                                 <div class="mb-3">
@@ -113,6 +145,27 @@
                                     </div>
                                 </div>
                             </div>
+
+                            {{-- Consoles Form  --}}
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    @foreach ($consoles as $console)
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox"
+                                                @if (in_array($console->id, old('consoles', $game_console_ids ?? []))) checked @endif
+                                                id="tech-{{ $console->id }}" value="{{ $console->id }}"
+                                                name="consoles[]">
+                                            <label class="form-check-label"
+                                                for="console-{{ $console->id }}">{{ $console->label }}</label>
+                                        </div>
+                                    @endforeach
+                                    @error('console_id')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            {{-- Cover Form  --}}
                             <div class="col-11">
                                 <div class="mb-3">
                                     <label for="image">Copertina</label>
@@ -130,10 +183,13 @@
                                     <img src="{{ $game->image }}" alt="preview" class="img-fluid"id="preview">
                                 </div>
                             </div>
+
+                            {{-- Description Form  --}}
                             <div class="col-12">
                                 <div class="mb-3">
                                     <label for="description">Descrizione</label>
-                                    <textarea class="form-control @error('description') is-invalid @elseif(old('description')) is-valid @enderror"
+                                    <textarea
+                                        class="form-control @error('description') is-invalid @elseif(old('description')) is-valid @enderror"
                                         placeholder="Inserisci descrizione" id="description" name="description" style="height: 100px" required>{{ old('description', $game->description) }}</textarea>
                                     @error('description')
                                         <div class="invalid-feedback">{{ $message }}</div>

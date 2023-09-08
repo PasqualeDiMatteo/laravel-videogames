@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin\Games;
 
 use App\Http\Controllers\Controller;
+use App\Models\Console;
+use App\Models\Developer;
 use App\Models\Game;
 use App\Models\Publisher;
 use App\Models\Genre;
@@ -26,9 +28,12 @@ class GameController extends Controller
      */
     public function create()
     {
+
+        $developers = Developer::all();
         $publishers = Publisher::select('id', 'label')->get();
         $genres = Genre::select('id', 'name')->get();
-        return view('admin.games.create', compact('publishers', 'genres'));
+        $consoles = Console::select('id', 'label')->get();
+        return view('admin.games.create', compact('publishers', "developers", "consoles", 'genres'));
     }
 
     /**
@@ -47,10 +52,20 @@ class GameController extends Controller
             'description' => 'required|string',
             'publisher_id' => 'nullable|exists:publishers,id',
             'genre_id' => 'nullable|exists:genres,id'
+            'developer_id' => 'nullable|exists:developers,id',
+            'console_id' => 'nullable|exists:consoles,id'
         ]);
+
+
         $game->fill($data);
         $game->save();
+
         if (Arr::exists($data, 'genres')) $game->genres()->attach($data['genres']);
+      
+        // ATTACH if consoles exitsts
+        if (Arr::exists($data, 'consoles')) {
+            $game->consoles()->attach($data['consoles']);
+        }
         return to_route('admin.games.show', $game)->with("type", "success")->with("message", "Gioco caricato con successo");
     }
 
@@ -59,6 +74,7 @@ class GameController extends Controller
      */
     public function show(Game $game)
     {
+
         return view('admin.games.show', compact('game'));
     }
 
@@ -67,10 +83,14 @@ class GameController extends Controller
      */
     public function edit(Game $game)
     {
+
+        $developers = Developer::all();
         $publishers = Publisher::select('id', 'label')->get();
         $genres = Genre::select('id', 'name')->get();
         $game_genre_ids = $game->genres->pluck('id')->toArray();
-        return view('admin.games.edit', compact('game', 'publishers', 'genres', 'game_genre_ids'));
+        $consoles = Console::select('id', 'label')->get();
+        $game_console_ids = $game->consoles->pluck('id')->toArray();
+        return view('admin.games.edit', compact('game', 'publishers', "developers", 'consoles', 'game_console_ids', 'genres', 'game_genre_ids'));
     }
 
     /**
@@ -88,10 +108,18 @@ class GameController extends Controller
             'description' => 'required|string',
             'publisher_id' => 'nullable|exists:publishers,id',
             'genre_id' => 'nullable|exists:genres,id'
+            'developer_id' => 'nullable|exists:developers,id',
+            'publisher_id' => 'nullable|exists:publishers,id',
+            'console_id' => 'nullable|exists:consoles,id'
         ]);
+      
         $game->update($data);
         if (!Arr::exists($data, 'genres') && count($game->genres)) $game->genres()->detach();
         elseif (Arr::exists($data, 'genres')) $game->genres()->sync($data['genres']);
+      
+        // ATTACH if consoles exitsts
+        if (!Arr::exists($data, 'consoles') && count($game->consoles)) $game->consoles()->detach();
+        elseif (Arr::exists($data, 'consoles')) $game->consoles()->sync($data['consoles']);
         return to_route('admin.games.index')->with('type', 'success')->with('message', 'Gioco modificato con successo');
     }
 
@@ -120,7 +148,12 @@ class GameController extends Controller
     public function drop(string $id)
     {
         $game = Game::onlyTrashed()->findOrFail($id);
+
+        // Remove relations before delete
+        if (count($game->consoles)) $game->consoles()->detach();
+
         $game->forceDelete();
+
         return to_route('admin.games.trash')->with("type", "success")->with("message", "Gioco cancellato definitivamente");
     }
 
