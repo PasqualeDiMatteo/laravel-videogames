@@ -75,6 +75,24 @@
                                     @enderror
                                 </div>
                             </div>
+                            <div class="col-6">
+                                <div class="mb-3">
+                                    <label for="publisher">Publisher</label>
+                                    <select
+                                        class="form-select @error('publisher_id') is-invalid @elseif(old('publisher_id')) is-valid @enderror"
+                                        name="publisher_id" id="publisher">
+                                        <option value="">Nessuno</option>
+                                        @foreach ($publishers as $publisher)
+                                            <option @if (old('publisher_id', $game->publisher_id) == $publisher->id) selected @endif
+                                                value="{{ $publisher->id }}">
+                                                {{ $publisher->label }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('publisher_id')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
                             <div class="col-11">
                                 <div class="mb-3">
                                     <label for="image">Copertina</label>
