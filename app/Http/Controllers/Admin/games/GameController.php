@@ -113,8 +113,13 @@ class GameController extends Controller
         $game->description = $data['description'];
         $game->developer_id = $data['developer_id'];
         $game->publisher_id = $data['publisher_id'];
-        $game->console_id = $data['console_id'];
         $game->save();
+
+
+        // ATTACH if consoles exitsts
+        if ($request->console_id) {
+            $game->consoles()->sync($request->console_id);
+        }
         return to_route('admin.games.index')->with('type', 'success')->with('message', 'Gioco modificato con successo');
     }
 
